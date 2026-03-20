@@ -10,13 +10,13 @@ import com.navercorp.nid.profile.util.NidProfileCallback
 object NaverLoginUtils {
 
     /** 应用程序注册后颁发的客户端 ID **/
-    const val OAUTH_CLIENT_ID = ""
+    const val OAUTH_CLIENT_ID = "VmwjEe27vfjnlYddFJm1"
 
     /** 应用程序注册后颁发的客户端密钥 **/
-    const val OAUTH_CLIENT_SECRET = ""
+    const val OAUTH_CLIENT_SECRET = "PMLSK70YnZ"
 
     /** 要在 Naver 应用登录屏幕上显示的应用名称 **/
-    const val OAUTH_CLIENT_NAME = ""
+    const val OAUTH_CLIENT_NAME = "PokerNaver"
 
     fun initSDK(context: Context, callback: NidOAuthInitializingCallback? = null) {
         NidOAuth.initialize(context, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME, callback)
