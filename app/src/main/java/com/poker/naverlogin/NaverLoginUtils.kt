@@ -40,7 +40,9 @@ object NaverLoginUtils {
      *  要删除之前存储的访问令牌和刷新令牌，必须调用
      */
     fun loginOut(callback: NidOAuthCallback) {
+        //只是退出登录，清除了用户的token信息，授权还在
         NidOAuth.logout(callback)
+        //授权也取消，调用后下次拉起登录重新授权
         NidOAuth.disconnect(callback)
     }
 }
