@@ -242,12 +242,14 @@ class NidOAuthBridgeActivity : AppCompatActivity() {
                     errorCode = errorCode,
                     errorDesc = errorDescription,
                 )
-
-            if (code.isNullOrEmpty()) {
-                finishWithErrorResult(data)
-            } else {
-                login(loginInfo)
-            }
+            val callback = NidOAuth.oauthLoginCallback
+            callback?.onAuthCode(loginInfo)
+            // 这里截断
+//            if (code.isNullOrEmpty()) {
+//                finishWithErrorResult(data)
+//            } else {
+//                login(loginInfo)
+//            }
         }
 
     private suspend fun login(loginInfo: LoginInfo) {

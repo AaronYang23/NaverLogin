@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.navercorp.nid.NidOAuth
 import com.navercorp.nid.core.data.datastore.NidOAuthInitializingCallback
+import com.navercorp.nid.oauth.domain.vo.LoginInfo
 import com.navercorp.nid.oauth.util.NidOAuthCallback
 import com.navercorp.nid.profile.domain.vo.NidProfile
 import com.navercorp.nid.profile.util.NidProfileCallback
@@ -49,6 +50,11 @@ class MainActivity : AppCompatActivity() {
                     override fun onFailure(errorCode: String, errorDesc: String) {
 
                     }
+
+                    override fun onAuthCode(loginInfo: LoginInfo) {
+                        val auchcode = loginInfo.oauthCode
+                        message.text = message.text.toString() + "\n\n" + "auchcode : $auchcode"
+                    }
                 })
             }
 
@@ -85,6 +91,11 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onFailure(errorCode: String, errorDesc: String) {
 
+                    }
+
+                    override fun onAuthCode(loginInfo: LoginInfo) {
+                        val auchcode = loginInfo.oauthCode
+                        message.text = message.text.toString() + "\n\n" + "auchcode : auchcode:$auchcode"
                     }
                 })
             }

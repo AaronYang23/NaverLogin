@@ -95,6 +95,9 @@ class NidOAuthBridgeViewModel : ViewModel() {
                 _isShowProgress.postValue(false)
                 _isSuccessRefreshToken.postValue(false)
             }
+
+            override fun onAuthCode(loginInfo: LoginInfo) {
+            }
         }
 
         createErrorHandlingIoScope(
