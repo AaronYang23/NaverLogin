@@ -58,6 +58,12 @@ class MainActivity : AppCompatActivity() {
                         override fun onSuccess(result: NidProfile) {
                             Log.i("======", "======result:$result")
                             message.text = message.text.toString() + "\n\n" + "result:$result"
+                            var refreshToken = NidOAuth.getRefreshToken()
+                            var accessToken = NidOAuth.getAccessToken()
+                            var id = result.profile.id
+                            //这三个id都不一样， token用accessToken  顺便清楚下accessToken refreshToken的差异
+                            message.text = message.text.toString() + "\n\n" + "refreshToken:$refreshToken" + "accessToken:$accessToken" + "id:$id"
+
                         }
 
                         override fun onFailure(
