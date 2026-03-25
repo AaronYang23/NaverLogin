@@ -1,21 +1,20 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.library")
+    id("kotlin-android")
     `maven-publish`
 }
 
 android {
-    compileSdk = Configurations.compileSdkVersion
+    namespace = "com.nhn.android.oauth"
+    compileSdk = 34
 
     defaultConfig {
-        minSdk = Configurations.minSdkVersion
-
+        minSdk = 21
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
         multiDexEnabled = false
-        buildConfigField("String", "VERSION_NAME", "\"${Configurations.moduleVersionName}\"")
+
+        // 这里直接写死版本号，避免依赖 Configurations
+        buildConfigField("String", "VERSION_NAME", "\"5.11.2\"")
     }
 
     buildTypes {
@@ -33,15 +32,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
-    lint {
-        abortOnError = false
-        targetSdk = Configurations.targetSdkVersion
+    kotlinOptions {
+        jvmTarget = "11"
     }
 
     buildFeatures {
@@ -49,88 +41,43 @@ android {
         viewBinding = true
     }
 
-    testOptions {
-        unitTests.isIncludeAndroidResources = true
-        targetSdk = Configurations.targetSdkVersion
+    lint {
+        abortOnError = false
     }
 
-    namespace = "com.nhn.android.oauth"
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 dependencies {
-    implementation(libs.kotlin.stdlib)
-    implementation(libs.kotlinx.coroutines.android)
+    // Kotlin
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.legacy.support.core.utils)
-    implementation(libs.androidx.browser)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.security.crypto)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.lifecycle.process)
+    // AndroidX
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.legacy:legacy-support-core-utils:1.0.0")
+    implementation("androidx.browser:browser:1.6.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.fragment:fragment-ktx:1.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-process:2.6.2")
 
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
-    implementation(libs.moshi.kotlin)
-    implementation(libs.okhttp.logging.interceptor)
+    // Network
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
-    api(libs.lottie)
+    // Lottie
+    implementation("com.airbnb.android:lottie:6.1.0")
 
-    testImplementation(libs.junit)
-    testImplementation(libs.androidx.test.core)
-    testImplementation(libs.androidx.test.runner)
-    testImplementation(libs.powermock.api.mockito2)
-    testImplementation(libs.powermock.module.junit4)
-    testImplementation(libs.robolectric)
-    testImplementation(libs.mockwebserver)
-    testImplementation(libs.mockk)
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                groupId = "com.navercorp.nid"
-                artifactId = "oauth"
-                version = Configurations.moduleVersionName
-
-                pom {
-                    licenses {
-                        license {
-                            name.set("Apache License, Version 2.0")
-                            url.set("http://www.apache.org/licenses/LICENSE-2.0.html")
-                            distribution.set("repo")
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id.set("namhun.kim")
-                            name.set("Namhoon Kim")
-                            email.set("namhun.kim@navercorp.com")
-                        }
-                        developer {
-                            id.set("dayeon.lee")
-                            name.set("Dayeon Lee")
-                            email.set("dayeon.lee@navercorp.com")
-                        }
-                        developer {
-                            id.set("yuri.mun")
-                            name.set("Yuri Mun")
-                            email.set("yu_ri.mun@navercorp.com")
-                        }
-                    }
-
-                    scm {
-                        connection.set("scm:git@github.com:naver/naveridlogin-sdk-android.git")
-                        developerConnection.set("scm:git@github.com:naver/naveridlogin-sdk-android.git")
-                        url.set("https://github.com/naver/naveridlogin-sdk-android")
-                    }
-                }
-            }
-        }
-    }
+    // Test
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.core:1.5.0")
+    androidTestImplementation("androidx.test.runner:1.5.2")
 }

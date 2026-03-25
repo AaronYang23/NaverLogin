@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "NaverLogin"
 include(":app")
- 
+include(":Nid-OAuth")

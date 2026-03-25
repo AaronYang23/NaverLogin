@@ -45,5 +45,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("com.navercorp.nid:oauth:5.11.2") // jdk 11
+    implementation(project(":Nid-OAuth"))
+//    implementation("com.navercorp.nid:oauth:5.11.2") // jdk 11
 }
